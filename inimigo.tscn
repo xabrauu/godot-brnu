@@ -1,0 +1,79 @@
+[gd_scene load_steps=13 format=3 uid="uid://ce6eilheile3f"]
+
+[ext_resource type="Script" path="res://inimigo.gd" id="1_p8ie6"]
+[ext_resource type="Texture2D" uid="uid://bs5ihqsvvbhj7" path="res://cleitinho/pa1.png" id="2_3sytf"]
+[ext_resource type="Texture2D" uid="uid://o0vblf3hbsmc" path="res://cleitinho/pa2 (2).png" id="3_o7pb5"]
+[ext_resource type="Texture2D" uid="uid://dnjsxbqytangf" path="res://cleitinho/pa2.png" id="4_t2tod"]
+[ext_resource type="Texture2D" uid="uid://bvxm2eiqsrl7w" path="res://cleitinho/download.png" id="5_wvseo"]
+[ext_resource type="Texture2D" uid="uid://ddu3o7y1erh5h" path="res://cleitinho/download (1).png" id="6_ujc7p"]
+[ext_resource type="Texture2D" uid="uid://b0hn308mh1tra" path="res://cleitinho/download (2).png" id="7_puj3i"]
+[ext_resource type="Texture2D" uid="uid://b8oyqegtv52jf" path="res://cleitinho/cleitinho.png" id="8_povxt"]
+[ext_resource type="Texture2D" uid="uid://bsdet41mt542u" path="res://cleitinho/cleitinho2.png" id="9_2kh1y"]
+[ext_resource type="Texture2D" uid="uid://brh25o6a8f313" path="res://cleitinho/cleitinho3.png" id="10_c5jks"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cmmbw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3sytf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o7pb5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t2tod")
+}],
+"loop": false,
+"name": &"blue_beetle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_wvseo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ujc7p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_puj3i")
+}],
+"loop": false,
+"name": &"green_beetle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_povxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2kh1y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_c5jks")
+}],
+"loop": true,
+"name": &"red_beetle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7u6if"]
+
+[node name="inimigo" type="RigidBody2D" groups=["bugs"]]
+collision_layer = 2
+gravity_scale = 0.0
+script = ExtResource("1_p8ie6")
+
+[node name="Anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 10)
+scale = Vector2(0.7, 0.7)
+sprite_frames = SubResource("SpriteFrames_cmmbw")
+animation = &"green_beetle"
+autoplay = "blue_beetle"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7u6if")
+
+[node name="Visible" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(1, -1)
+
+[connection signal="screen_exited" from="Visible" to="." method="_on_visible_screen_exited"]

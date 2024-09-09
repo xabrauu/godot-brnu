@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=3 uid="uid://caum5ftx7jful"]
+
+[ext_resource type="FontFile" uid="uid://cwbt2ugsjq30h" path="res://font/Dihil.ttf" id="1_ig211"]
+[ext_resource type="Script" path="res://hud.gd" id="1_p30yt"]
+[ext_resource type="StyleBox" uid="uid://qurubb2564th" path="res://btn_tyle.tres" id="2_co23l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8opr1"]
+bg_color = Color(0.0470588, 0.278431, 0.545098, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4wyjl"]
+bg_color = Color(0.109804, 0.215686, 0.796078, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 20.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="InputEventAction" id="InputEventAction_4dk5t"]
+action = &"start_game"
+
+[sub_resource type="Shortcut" id="Shortcut_rmokf"]
+events = [SubResource("InputEventAction_4dk5t")]
+
+[node name="hud" type="CanvasLayer"]
+script = ExtResource("1_p30yt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="scorelabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_right = 32.0
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0.619608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ig211")
+theme_override_font_sizes/font_size = 64
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="messagelabel" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = -99.0
+offset_right = 121.0
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0.619608, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ig211")
+theme_override_font_sizes/font_size = 64
+text = "bruno"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="startbutton" type="Button" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -22.5
+offset_top = -31.0
+offset_right = 22.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 1, 1)
+theme_override_colors/font_pressed_color = Color(0.563478, 0.792911, 0.992883, 1)
+theme_override_colors/font_hover_color = Color(0.563478, 0.792911, 0.992883, 1)
+theme_override_colors/font_focus_color = Color(0.982343, 0.982342, 0.982342, 1)
+theme_override_fonts/font = ExtResource("1_ig211")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = ExtResource("2_co23l")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8opr1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4wyjl")
+theme_override_styles/focus = ExtResource("2_co23l")
+shortcut = SubResource("Shortcut_rmokf")
+text = "start"
+
+[node name="messagetimer" type="Timer" parent="."]
+
+[connection signal="pressed" from="Control/startbutton" to="." method="_on_startbutton_pressed"]
+[connection signal="timeout" from="messagetimer" to="." method="_on_messagetimer_timeout"]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=11 format=3 uid="uid://bh5cktsk5w232"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_1e7ol"]
+[ext_resource type="PackedScene" uid="uid://b8fk4kpmj5f67" path="res://prefabs/player.tscn" id="1_u5hm1"]
+[ext_resource type="PackedScene" uid="uid://ce6eilheile3f" path="res://inimigo.tscn" id="2_nw347"]
+[ext_resource type="PackedScene" uid="uid://caum5ftx7jful" path="res://hud.tscn" id="3_mlg45"]
+[ext_resource type="Shader" path="res://shaders/scrolling_bg.gdshader" id="3_t11vq"]
+[ext_resource type="Texture2D" uid="uid://dofb7g1rl7iq" path="res://cenario/af83ce42218d4c9bc413579dc42050cf7xOm83tc4OUOFAo0-0.png" id="4_ywkip"]
+[ext_resource type="AudioStream" uid="uid://bt6xlwitqoprw" path="res://sounds/gameover.wav" id="7_ktw37"]
+[ext_resource type="AudioStream" uid="uid://durs0eeem0aow" path="res://sounds/Jamie Duffy - Solas (Official Video).MP3" id="8_duaiq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7akie"]
+shader = ExtResource("3_t11vq")
+shader_parameter/speed = 1.0
+
+[sub_resource type="Curve2D" id="Curve2D_bdrgh"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
+}
+point_count = 5
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_1e7ol")
+bug_scene = ExtResource("2_nw347")
+
+[node name="bg" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_7akie")
+offset_right = 480.0
+offset_bottom = 720.0
+texture = ExtResource("4_ywkip")
+stretch_mode = 1
+
+[node name="hud" parent="." instance=ExtResource("3_mlg45")]
+
+[node name="player" parent="." instance=ExtResource("1_u5hm1")]
+position = Vector2(242, 362)
+scale = Vector2(0.5, 0.5)
+
+[node name="bugTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="scoreTimer" type="Timer" parent="."]
+
+[node name="startTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="startposition" type="Marker2D" parent="."]
+position = Vector2(240, 360)
+
+[node name="bugpath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_bdrgh")
+
+[node name="bugpathLocation" type="PathFollow2D" parent="bugpath"]
+
+[node name="gameoversound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_ktw37")
+volume_db = -5.0
+
+[node name="bgmusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_duaiq")
+volume_db = -15.0
+
+[connection signal="start_game" from="hud" to="." method="new_game"]
+[connection signal="hit" from="player" to="." method="game_over"]
+[connection signal="timeout" from="bugTimer" to="." method="_on_bug_timer_timeout"]
+[connection signal="timeout" from="scoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="timeout" from="startTimer" to="." method="_on_start_timer_timeout"]

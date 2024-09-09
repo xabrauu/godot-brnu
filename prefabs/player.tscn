@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://b8fk4kpmj5f67"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_dewa6"]
+[ext_resource type="Texture2D" uid="uid://bqswt6cwq7x8j" path="res://joberson/download.png" id="2_yoqbu"]
+[ext_resource type="Texture2D" uid="uid://cavk4k68ohbcm" path="res://joberson/download (1).png" id="3_gfpvj"]
+[ext_resource type="Texture2D" uid="uid://bxoqvab2p6d1i" path="res://joberson/download (2).png" id="4_pcs75"]
+[ext_resource type="Texture2D" uid="uid://cctfoen1gbq8n" path="res://joberson/direita1.png" id="5_0d0na"]
+[ext_resource type="Texture2D" uid="uid://05j5111x34vw" path="res://joberson/direita2.png" id="6_uvqy8"]
+[ext_resource type="Texture2D" uid="uid://qkn2lhgjfym5" path="res://joberson/baixo1.png" id="7_apob3"]
+[ext_resource type="Texture2D" uid="uid://3scdoigqm8kj" path="res://joberson/baixo2.png" id="8_a8aty"]
+[ext_resource type="Texture2D" uid="uid://b0xagwldinvyv" path="res://joberson/cima1.png" id="9_sh8m1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m2d1h"]
+radius = 43.1856
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i8q4y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_yoqbu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_gfpvj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pcs75")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_0d0na")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_uvqy8")
+}],
+"loop": false,
+"name": &"move",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_apob3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a8aty")
+}],
+"loop": true,
+"name": &"move down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_sh8m1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sh8m1")
+}],
+"loop": true,
+"name": &"move up",
+"speed": 5.0
+}]
+
+[node name="player" type="Area2D"]
+position = Vector2(-1, -1)
+rotation = -0.027121
+collision_mask = 2
+script = ExtResource("1_dewa6")
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0.999633, 0.0271168)
+rotation = 0.0462712
+shape = SubResource("CircleShape2D_m2d1h")
+
+[node name="anim" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.589146, 52.0351)
+rotation = 0.0232197
+scale = Vector2(2.5, 2.33)
+sprite_frames = SubResource("SpriteFrames_i8q4y")
+animation = &"idle"
+autoplay = "idle"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
